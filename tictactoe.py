@@ -19,11 +19,12 @@ def login():
 
 def gameboard():
     # Display the board
-    
-    print 'Game: Tic Tac Toe'
-    print '                       Player X: ',user_x
-    print '                       Player O: ',user_o
-    print '               '
+    print '////////////////////////////////////////////////////'
+    print '// Game: Tic Tac Toe'
+    print '/////////////////////////'
+    print '                       // Player X: ',user_x
+    print '                       // Player O: ',user_o
+    print '                       /////////////////////////////'
     print '     ',currentboard['square_1'],'|',currentboard['square_2'],'|',currentboard['square_3']
     print '     -----------'
     print '     ',currentboard['square_4'],'|',currentboard['square_5'],'|',currentboard['square_6']
@@ -32,8 +33,6 @@ def gameboard():
     print '               '
     
 def move_select(user):
-    # User prompted for text input
-    # TBC: need to handle text input vs raw_input strings
     move = None
 
     # Set whether this move is going to be an X or an O based on the current user
@@ -123,12 +122,61 @@ def move_select(user):
     gameboard()
     
     # Add a check here to see if this was the winning move
-    
-    # If the game hasn't been won, then give the other player a turn
-    if user == user_x:
-        move_select(user_o)
-    else:
-        move_select(user_x)
+    if checkwin():
+        print '*****************'
+        print '* GAME OVER!'
+        print '*',user,'WINS!'
+        print '*****************'
+    else:    
+        # If the game hasn't been won, then give the other player a turn
+        if user == user_x:
+            move_select(user_o)
+        else:
+            move_select(user_x)
+
+def checkwin():
+    # Check the board for win scenarios
+    #123
+    if currentboard['square_1'] == 'X' and currentboard['square_2'] == 'X' and currentboard['square_3'] == 'X':
+        return True
+    if currentboard['square_1'] == 'O' and currentboard['square_2'] == 'O' and currentboard['square_3'] == 'O':
+        return True
+    #456
+    if currentboard['square_4'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_6'] == 'X':
+        return True
+    if currentboard['square_4'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_6'] == 'O':
+        return True
+    #789
+    if currentboard['square_7'] == 'X' and currentboard['square_8'] == 'X' and currentboard['square_9'] == 'X':
+        return True
+    if currentboard['square_7'] == 'O' and currentboard['square_8'] == 'O' and currentboard['square_9'] == 'O':
+        return True
+    #147
+    if currentboard['square_1'] == 'X' and currentboard['square_4'] == 'X' and currentboard['square_7'] == 'X':
+        return True
+    if currentboard['square_1'] == 'O' and currentboard['square_4'] == 'O' and currentboard['square_7'] == 'O':
+        return True
+    #258
+    if currentboard['square_2'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_8'] == 'X':
+        return True
+    if currentboard['square_2'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_8'] == 'O':
+        return True
+    #369
+    if currentboard['square_3'] == 'X' and currentboard['square_6'] == 'X' and currentboard['square_9'] == 'X':
+        return True
+    if currentboard['square_3'] == 'O' and currentboard['square_6'] == 'O' and currentboard['square_9'] == 'O':
+        return True
+    #159
+    if currentboard['square_1'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_9'] == 'X':
+        return True
+    if currentboard['square_1'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_9'] == 'O':
+        return True
+    #357
+    if currentboard['square_3'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_7'] == 'X':
+        return True
+    if currentboard['square_3'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_7'] == 'O':
+        return True
+
 
 # Launch
 tictactoe()
