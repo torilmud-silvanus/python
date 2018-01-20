@@ -1,6 +1,12 @@
+# Globals' Starting Position
 currentboard = {'square_1':'1','square_2':'2','square_3':'3','square_4':'4','square_5':'5','square_6':'6','square_7':'7','square_8':'8','square_9':'9'}
+user_x = None
+user_o = None
+usercount = 0
 
 def tictactoe():
+    gameboard()
+    welcome('Tic Tac Toe')
     login()
     gameboard()
     move_select(user_x)
@@ -12,13 +18,15 @@ def validation(error):
     print ' VALIDATION ERROR:',error
     print ' '
 
+def welcome(game):
+    print ' '
+    print ' Welcome to the game',game
+    print ' '
+
 def login():
-    global user_x
-    user_x = None
-    global user_o
-    user_o = None
     global usercount
-    usercount = 0
+    global user_x
+    global user_o
     
     if usercount == 0:
         try:
