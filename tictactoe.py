@@ -31,6 +31,8 @@ def gameboard():
     print '     -----------'
     print '     ',currentboard['square_7'],'|',currentboard['square_8'],'|',currentboard['square_9']
     print '               '
+    print '               '
+    print '               '
     print '////////////////////////////////////////////////////'
     
 def move_select(user):
@@ -43,7 +45,7 @@ def move_select(user):
         mark = 'O'
 
     # USER MOVE: User inputs what square they want to mark
-    print ' ',user,'which square would you like to mark with an',mark,'?'
+    print '',user,'which square would you like to mark with an',mark,'?'
     try:
         move = int(raw_input(':'))
     # Validation
@@ -75,11 +77,13 @@ def move_select(user):
         print ' * GAME OVER!'
         print ' *',user,'WINS!'
         print ' *****************************'
+        return True
     elif checkstalemate():
         print ' *****************************'
         print ' * STALEMATE! EVERYONE LOSES!'
         print ' * NO MORE MOVES AVAILABLE'
         print ' *****************************'
+        return True
     else:    
         # If the game hasn't been won, then give the other player a turn
         if user == user_x:
