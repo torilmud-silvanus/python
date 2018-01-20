@@ -5,17 +5,61 @@ def tictactoe():
     gameboard()
     move_select(user_x)
 
+def validation(error):
+    # this function handles the message display for validation errors
+    # this function lets us unify message styling
+    print ' '
+    print ' VALIDATION ERROR:',error
+    print ' '
+
 def login():
     global user_x
     user_x = None
     global user_o
     user_o = None
+    global usercount
+    usercount = 0
     
-    if user_x is None:
-        user_x = raw_input('Who wants to be X: ')
-    
-    if user_o is None:
-        user_o = raw_input('Who wants to be O: ')
+    if usercount == 0:
+        try:
+            print ' How many players?'
+            usercount = int(raw_input(':'))
+        except ValueError:
+            validation('That is not a valid selection. Try a number!')
+            login()
+        if usercount > 2:
+            validation('That is not a valid selection. The maximum number of players is 2!')
+            login()
+        if usercount < 1:
+            validation('That is not a valid selection. The minimum number of players is 1!')
+            login()
+
+    if usercount == 1:
+        print ' Just you eh? Fine, I will play against you.'
+        print ' What is your name?'
+        user1 = str(raw_input(':'))
+        try:
+            print' Do you want to be X or O?'
+            user1_mark = str(raw_input(':')).upper()
+        except:
+            validation('You can only choose X or O')
+            login()
+        if user1_mark == 'X':
+            user_x = user1
+            user_o = 'Computer'
+        elif user1_mark == 'O':
+            user_o = user1
+            user_x = 'Computer'
+        else:
+            login()
+
+    if usercount == 2:
+        if user_x is None:
+            print ' Who wants to be X?'
+            user_x = raw_input(':')
+        if user_o is None:
+            print ' Who wants to be O?'
+            user_o = raw_input(':')
 
 def gameboard():
     # Display the board
@@ -34,6 +78,7 @@ def gameboard():
     print '               '
     print '               '
     print '////////////////////////////////////////////////////'
+    print ' '
     
 def move_select(user):
     move = None
@@ -50,8 +95,8 @@ def move_select(user):
         move = int(raw_input(':'))
     # Validation
     except:
-        print ' VALIDATION ERROR: That is not a valid selection!'
-        move_select(user)
+            validation('That is not a valid selection. Try again!')
+            move_select(user)
             
     # Mark the square chosen  
     for key, val in currentboard.iteritems():
@@ -65,7 +110,7 @@ def move_select(user):
         else:
             continue
     else:
-        print ' VALIDATION ERROR: That square has already been used.'
+        validation('That square has already been used.')
         move_select(user)
         
     # After marking the square, reprint the board so the user can see the mark
@@ -93,7 +138,7 @@ def move_select(user):
 
 def checkwin():
     # Check the board for win scenarios
-    # 123
+    # 123.
     if currentboard['square_1'] == 'X' and currentboard['square_2'] == 'X' and currentboard['square_3'] == 'X':
         return True
     if currentboard['square_1'] == 'O' and currentboard['square_2'] == 'O' and currentboard['square_3'] == 'O':
