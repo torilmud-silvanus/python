@@ -62,6 +62,7 @@ def move_select(user):
                 continue
         else:
             continue
+    else:
         print ' VALIDATION ERROR: That square has already been used.'
         move_select(user)
         
