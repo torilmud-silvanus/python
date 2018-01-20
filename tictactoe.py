@@ -31,6 +31,9 @@ def gameboard():
     print '     -----------'
     print '     ',currentboard['square_7'],'|',currentboard['square_8'],'|',currentboard['square_9']
     print '               '
+    print '               '
+    print '               '
+    print '////////////////////////////////////////////////////'
     
 def move_select(user):
     move = None
@@ -41,92 +44,46 @@ def move_select(user):
     elif user == user_o:
         mark = 'O'
 
-    # User inputs what square they want to mark
-    print user,'which square would you like to mark with an',mark
+    # USER MOVE: User inputs what square they want to mark
+    print '',user,'which square would you like to mark with an',mark,'?'
     try:
         move = int(raw_input(':'))
     # Validation
     except:
-        print 'VALIDATION ERROR: That is not a valid selection!'
+        print ' VALIDATION ERROR: That is not a valid selection!'
         move_select(user)
             
-    # Mark the square
-    if move == 1:
-        if currentboard['square_1'] != '1':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
+    # Mark the square chosen  
+    for key, val in currentboard.iteritems():
+        if val.isdigit():
+            if int(val) == int(move):
+                currentboard[key] = mark
+                print ' Marking Square',move,'with an',mark,'for',user
+                break
+            else:
+                continue
         else:
-            currentboard['square_1'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 2:
-        if currentboard['square_2'] != '2':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_2'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 3:
-        if currentboard['square_3'] != '3':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_3'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 4:
-        if currentboard['square_4'] != '4':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_4'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 5:
-        if currentboard['square_5'] != '5':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_5'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 6:
-        if currentboard['square_6'] != '6':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_6'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 7:
-        if currentboard['square_7'] != '7':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_7'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 8:
-        if currentboard['square_8'] != '8':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_8'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
-    elif move == 9:
-        if currentboard['square_9'] != '9':
-            print 'Sorry that square has already been marked, try another one!'
-            move_select(user)
-        else:
-            currentboard['square_9'] = mark
-            print 'Marking Square',move,'with an',mark,'for',user
+            continue
     else:
-        print 'VALIDATION ERROR: That is not a valid selection!'
+        print ' VALIDATION ERROR: That square has already been used.'
         move_select(user)
-    
-    # After marking the square, reprint the board and give the other player a turn
+        
+    # After marking the square, reprint the board so the user can see the mark
     gameboard()
     
-    # Add a check here to see if this was the winning move
+    # Check Game Over scenarios before handing off to the next player
     if checkwin():
-        print '*****************'
-        print '* GAME OVER!'
-        print '*',user,'WINS!'
-        print '*****************'
+        print ' *****************************'
+        print ' * GAME OVER!'
+        print ' *',user,'WINS!'
+        print ' *****************************'
+        return True
+    elif checkstalemate():
+        print ' *****************************'
+        print ' * STALEMATE! EVERYONE LOSES!'
+        print ' * NO MORE MOVES AVAILABLE'
+        print ' *****************************'
+        return True
     else:    
         # If the game hasn't been won, then give the other player a turn
         if user == user_x:
@@ -136,47 +93,55 @@ def move_select(user):
 
 def checkwin():
     # Check the board for win scenarios
-    #123
+    # 123
     if currentboard['square_1'] == 'X' and currentboard['square_2'] == 'X' and currentboard['square_3'] == 'X':
         return True
     if currentboard['square_1'] == 'O' and currentboard['square_2'] == 'O' and currentboard['square_3'] == 'O':
         return True
-    #456
+    # 456
     if currentboard['square_4'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_6'] == 'X':
         return True
     if currentboard['square_4'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_6'] == 'O':
         return True
-    #789
+    # 789
     if currentboard['square_7'] == 'X' and currentboard['square_8'] == 'X' and currentboard['square_9'] == 'X':
         return True
     if currentboard['square_7'] == 'O' and currentboard['square_8'] == 'O' and currentboard['square_9'] == 'O':
         return True
-    #147
+    # 147
     if currentboard['square_1'] == 'X' and currentboard['square_4'] == 'X' and currentboard['square_7'] == 'X':
         return True
     if currentboard['square_1'] == 'O' and currentboard['square_4'] == 'O' and currentboard['square_7'] == 'O':
         return True
-    #258
+    # 258
     if currentboard['square_2'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_8'] == 'X':
         return True
     if currentboard['square_2'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_8'] == 'O':
         return True
-    #369
+    # 369
     if currentboard['square_3'] == 'X' and currentboard['square_6'] == 'X' and currentboard['square_9'] == 'X':
         return True
     if currentboard['square_3'] == 'O' and currentboard['square_6'] == 'O' and currentboard['square_9'] == 'O':
         return True
-    #159
+    # 159
     if currentboard['square_1'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_9'] == 'X':
         return True
     if currentboard['square_1'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_9'] == 'O':
         return True
-    #357
+    # 357
     if currentboard['square_3'] == 'X' and currentboard['square_5'] == 'X' and currentboard['square_7'] == 'X':
         return True
     if currentboard['square_3'] == 'O' and currentboard['square_5'] == 'O' and currentboard['square_7'] == 'O':
         return True
 
+def checkstalemate():
+    # STALEMATE: Wow they suck at this game
+    boardvalues = currentboard.values()
+    for x in boardvalues:
+        if x.isdigit():
+            break
+    else:
+        return True
 
 # Launch
 tictactoe()
