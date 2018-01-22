@@ -1,3 +1,5 @@
+from IPython.display import clear_output
+
 # Globals' Starting Position
 def newgame():
     # The board squares are filled with numbers to label the squares until they are marked during gameplay
@@ -22,11 +24,18 @@ def newgame():
     no = ('no', 'n', 'nah', 'naw', 'nope', 'disagree', 'decline')
     
 def tictactoe():
+    # This function controls navigation flow for the game from a high level
+    
+    # Game setup 
     newgame()
     gameboard()
     welcome('Tic Tac Toe')
     login()
+
+    # Game board
     gameboard()
+
+    # Game play
     move_select(user_x)
 
 def validation(error):
@@ -35,6 +44,25 @@ def validation(error):
     print ' '
     print ' VALIDATION ERROR:',error
     print ' '
+
+def confirm():
+    # This function is versatile and can be used to prompt the user to confirm any selection
+    print 'Are you sure?'
+    try:
+        confirm = str(raw_input(':')).lower()
+        if confirm in yes:
+            return True
+        elif confirm in no:
+            return False
+        else:
+            validation('To accept, the choices are',yes)
+            validation('To decline, the choices are',no)
+            confirm()
+    except:
+        validation('To accept, the choices are',yes)
+        validation('To decline, the choices are',no)
+        confirm()
+
 
 def welcome(game):
     print ' '
@@ -84,6 +112,9 @@ def login():
         login()
 
 def gameboard():
+    # Always clear the screen before rendering the game board
+    clear_output()
+
     # Display the board
     print '////////////////////////////////////////////////////'
     print '// Game: Tic Tac Toe'
@@ -226,24 +257,6 @@ def playagain():
         validation('Please choose y or n')
         playagain()
 
-def confirm():
-    # This function is versatile and can be used to prompt the user to confirm any selection
-    print 'Are you sure?'
-    try:
-        confirm = str(raw_input(':')).lower()
-        if confirm in yes:
-            return True
-        elif confirm in no:
-            return False
-        else:
-            validation('To accept, the choices are',yes)
-            validation('To decline, the choices are',no)
-            confirm()
-    except:
-        validation('To accept, the choices are',yes)
-        validation('To decline, the choices are',no)
-        confirm()
-
 def checkgameover():
     if checkwin(): return True
     if checkstalemate(): return True
@@ -258,6 +271,7 @@ def endgame():
                 print 'K, BYE!'
                 import sys
                 sys.exit(0)
+                return True
             else:
                 endgame()
         elif quit in no:
