@@ -1,10 +1,16 @@
 # Globals' Starting Position
-currentboard = {'square_1':'1','square_2':'2','square_3':'3','square_4':'4','square_5':'5','square_6':'6','square_7':'7','square_8':'8','square_9':'9'}
-user_x = None
-user_o = None
-usercount = 0
-
+def newgame():
+    global currentboard
+    global user_x
+    global user_o
+    global usercount
+    currentboard = {'square_1':'1','square_2':'2','square_3':'3','square_4':'4','square_5':'5','square_6':'6','square_7':'7','square_8':'8','square_9':'9'}
+    user_x = None
+    user_o = None
+    usercount = 0
+    
 def tictactoe():
+    newgame()
     gameboard()
     welcome('Tic Tac Toe')
     login()
@@ -130,12 +136,14 @@ def move_select(user):
         print ' * GAME OVER!'
         print ' *',user,'WINS!'
         print ' *****************************'
+        tictactoe()
         return True
     elif checkstalemate():
         print ' *****************************'
         print ' * STALEMATE! EVERYONE LOSES!'
         print ' * NO MORE MOVES AVAILABLE'
         print ' *****************************'
+        tictactoe()
         return True
     else:    
         # If the game hasn't been won, then give the other player a turn
